@@ -25,6 +25,11 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
+      {{- with .Values.hostAliases }}
+      hostAliases:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -82,6 +87,13 @@ spec:
             value: {{ .Values.config.fgtApi }}
           - name: CREDENTIALS_FILE
             value: "mah-bayer.json"
+          - name: ENVIRONMENT
+          # possible values are local|dev|tst
+          # ... or any ther existing in https://github.com/PharmaLedger-IMI/fgt-workspace/tree/master/fgt-bdns
+            value: "dev"
+          - name: bricksDomain
+          # value must exists in remote bdns.json - see previous.
+            value: traceability.mymah011
         command:
           - sh
           - -c
@@ -91,6 +103,9 @@ spec:
           - |
             cd /fgt-workspace
             
+            echo "=======> Ovewriting APIHub configs ..."
+            npm run update-docker-apihub-config &
+            sleep 5s
             echo "=======> Starting APIHub in background process ..."
             npm run server &
             server_pid=$!
