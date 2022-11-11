@@ -35,7 +35,7 @@ config:
   # -- The Domain, e.g. "fgt"
   domain: "traceability"
   # -- The Subdomain, should be domain.company, e.g. fgt.my-company
-  subDomain: "traceability.mah"
+  subDomain: "traceability.mymah011"
   # -- The Vault domain, should be vault.company, e.g. vault.my-company
   vaultDomain: "vault.mah"
   # -- The Full URL of the Ethadapter including protocol and port, e.g. "https://ethadapter.my-company.com:3000"
